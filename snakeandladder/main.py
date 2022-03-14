@@ -3,7 +3,7 @@ main file which runs the simulation
 """
 import argparse
 import json
-from snakeladder.simulate import SimulateAndProcessResult
+from snakeandladder.simulate import SimulateAndProcessResult
 from time import time
 
 

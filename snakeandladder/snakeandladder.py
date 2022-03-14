@@ -120,7 +120,7 @@ class Player:
             "biggest_climb": self.biggest_climb,
             "biggest_slide": self.biggest_slide,
             "total_climbs": self.total_climbs,
-            "total_slides": self.total_slides
+            "total_slides": self.total_slides,
         }
         for i in stat:
             if result.get(i):
@@ -132,7 +132,9 @@ class Player:
                 result["longest_turn"] = self.longest_turn
             elif result.get("longest_turn") == len(self.longest_turn):
                 result["longest_turn"] = (
-                    result.get("longest_turn") if result.get("longest_turn")[-1] > self.longest_turn[-1] else self.longest_turn
+                    result.get("longest_turn")
+                    if result.get("longest_turn")[-1] > self.longest_turn[-1]
+                    else self.longest_turn
                 )
         else:
             result["longest_turn"] = self.longest_turn
@@ -153,7 +155,9 @@ def start_game(number_of_players: int, snakes: dict, ladders: dict, result: dict
     while len(players) > 0:
         for idx, player in enumerate(players):
             if player.finished:
-                result[f"player{player.idx}"] = player.get_stat(position, result.get(f"player{player.idx}",{}))
+                result[f"player{player.idx}"] = player.get_stat(
+                    position, result.get(f"player{player.idx}", {})
+                )
                 position += 1
                 players.pop(idx)
             board.roll_dice(player)

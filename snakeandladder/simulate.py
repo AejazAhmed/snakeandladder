@@ -1,13 +1,17 @@
 import json
 from time import time
-from snakeladder.snakeandladder import start_game
+from snakeandladder.snakeandladder import start_game
 
 
 class SimulateAndProcessResult:
     def __init__(self, args):
         self.players = int(args.players)
         self.simulation = int(args.simulations)
-        self.config = self.verify_board_config(json.loads(args.config)) if args.config else self.verify_board_config(json.load(open(args.config_file)))
+        self.config = (
+            self.verify_board_config(json.loads(args.config))
+            if args.config
+            else self.verify_board_config(json.load(open(args.config_file)))
+        )
         self.result = {}
 
     def simulate(self):
@@ -15,15 +19,22 @@ class SimulateAndProcessResult:
         try:
             for i in range(self.simulation):
                 self.result = start_game(
-                        self.players, self.config["snakes"], self.config["ladders"], self.result)
+                    self.players,
+                    self.config["snakes"],
+                    self.config["ladders"],
+                    self.result,
+                )
             self.generate_stats_result()
         except Exception as e:
             print(f"Exception occurred with exception message \n {e} ")
 
-    def verify_board_config(self, config:dict):
+    def verify_board_config(self, config: dict):
         if config:
             new_config = {"snakes": {}, "ladders": {}}
-            if type(config.get("snakes")) is dict and type(config.get("ladders")) is dict:
+            if (
+                type(config.get("snakes")) is dict
+                and type(config.get("ladders")) is dict
+            ):
                 for key, value in config.get("snakes").items():
                     key = int(key)
                     value = int(value)
@@ -48,7 +59,9 @@ class SimulateAndProcessResult:
         for player in self.result:
             if not response.get(player):
                 response[player] = {}
-            response[player]["longest_turn"] = self.result[player].pop("longest_turn", [])
+            response[player]["longest_turn"] = self.result[player].pop(
+                "longest_turn", []
+            )
             for key, value in self.result[player].items():
                 if not response.get(player).get(key):
                     response[player][key] = {
@@ -67,4 +80,3 @@ class SimulateAndProcessResult:
         print(
             f"simulation is completed please check the generated result under {file_name} file"
         )
-

@@ -1,0 +1,1 @@
+poetry run simulate --config-file ./sampleBoardConfiguration.json --simulations 50 --players 5

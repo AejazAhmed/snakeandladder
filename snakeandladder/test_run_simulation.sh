@@ -1,1 +1,0 @@
-python3 main.py --config-file ./sampleBoardConfiguration.json --simulations 50 --players 5

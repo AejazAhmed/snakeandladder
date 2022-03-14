@@ -10,6 +10,7 @@ pytest = "*"
 
 [tool.poetry.scripts]
 simulate = "snakeandladder.main:main"
+test = "tests.main:main"
 
 [build-system]
 requires = ["poetry>=0.12"]
